@@ -30,14 +30,14 @@
   </url>
   
   <url>
-    <loc>https://winnerchen.github.io/about/index.html</loc>
+    <loc>https://winnerchen.github.io/categories/index.html</loc>
     
     <lastmod>2021-05-09T03:19:17.766Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://winnerchen.github.io/categories/index.html</loc>
+    <loc>https://winnerchen.github.io/about/index.html</loc>
     
     <lastmod>2021-05-09T03:19:17.766Z</lastmod>
     
@@ -51,13 +51,6 @@
   </url>
   
   <url>
-    <loc>https://winnerchen.github.io/2018/01/20/Teamcity-quickstart/</loc>
-    
-    <lastmod>2021-05-09T03:19:17.761Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://winnerchen.github.io/2017/10/19/Spring-Introduction/</loc>
     
     <lastmod>2021-05-09T03:19:17.761Z</lastmod>
@@ -65,9 +58,9 @@
   </url>
   
   <url>
-    <loc>https://winnerchen.github.io/2017/08/06/Git-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/</loc>
+    <loc>https://winnerchen.github.io/2018/01/20/Teamcity-quickstart/</loc>
     
-    <lastmod>2021-05-09T03:19:17.760Z</lastmod>
+    <lastmod>2021-05-09T03:19:17.761Z</lastmod>
     
   </url>
   
@@ -80,6 +73,13 @@
   
   <url>
     <loc>https://winnerchen.github.io/2017/08/11/Hexo-Node-js-GitHub%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
+    
+    <lastmod>2021-05-09T03:19:17.760Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://winnerchen.github.io/2017/08/06/Git-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/</loc>
     
     <lastmod>2021-05-09T03:19:17.760Z</lastmod>
     
