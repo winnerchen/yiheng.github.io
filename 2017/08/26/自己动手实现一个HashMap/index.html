@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/yiheng.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/yiheng.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/yiheng.github.io/atom.xml" title="Chen's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/yiheng.github.io/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1. 前言HashMap作为java数据结构中重要的一员，同时拥有高效的查询和插入的优点。近期在做项目的时候我也是领略到了hashmap的强大之处，hashmap为前后台数据的交互提供了非常高的可扩展性和灵活性。键值对的数据结构也天然对json字符串的转换提供良好的支持。这篇文章主要分析HashMap的原理，以及如何自己实现一个HashMap。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己动手实现一个HashMap">
+<meta property="og:url" content="https://winnerchen.github.io/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/index.html">
+<meta property="og:site_name" content="Chen&#39;s Blog">
+<meta property="og:description" content="1. 前言HashMap作为java数据结构中重要的一员，同时拥有高效的查询和插入的优点。近期在做项目的时候我也是领略到了hashmap的强大之处，hashmap为前后台数据的交互提供了非常高的可扩展性和灵活性。键值对的数据结构也天然对json字符串的转换提供良好的支持。这篇文章主要分析HashMap的原理，以及如何自己实现一个HashMap。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-06-11T08:38:55.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自己动手实现一个HashMap">
+<meta name="twitter:description" content="1. 前言HashMap作为java数据结构中重要的一员，同时拥有高效的查询和插入的优点。近期在做项目的时候我也是领略到了hashmap的强大之处，hashmap为前后台数据的交互提供了非常高的可扩展性和灵活性。键值对的数据结构也天然对json字符串的转换提供良好的支持。这篇文章主要分析HashMap的原理，以及如何自己实现一个HashMap。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/yiheng.github.io/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://winnerchen.github.io/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/">
+
+
+
+
+
+  <title>自己动手实现一个HashMap | Chen's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/winnerchen/yiheng.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/yiheng.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/yiheng.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/yiheng.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/yiheng.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/yiheng.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/yiheng.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/yiheng.github.io/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://winnerchen.github.io/yiheng.github.io/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yiheng Chen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/yiheng.github.io/images/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自己动手实现一个HashMap</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-26T17:30:39+10:00">
+                2017-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/" class="leancloud_visitors" data-flag-title="自己动手实现一个HashMap">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>HashMap作为java数据结构中重要的一员，同时拥有高效的查询和插入的优点。近期在做项目的时候我也是领略到了hashmap的强大之处，hashmap为前后台数据的交互提供了非常高的可扩展性和灵活性。键值对的数据结构也天然对json字符串的转换提供良好的支持。这篇文章主要分析HashMap的原理，以及如何自己实现一个HashMap。<br><a id="more"></a></p>
+<h1 id="2-HashMap的原理"><a href="#2-HashMap的原理" class="headerlink" title="2. HashMap的原理"></a>2. HashMap的原理</h1><h2 id="2-1-什么是HashMap？"><a href="#2-1-什么是HashMap？" class="headerlink" title="2.1 什么是HashMap？"></a>2.1 什么是HashMap？</h2><p>基于哈希表的 Map 接口的实现。此实现提供所有可选的映射操作，并允许使用 null 值和 null 键。（除了非同步和允许使用 null 之外，HashMap 类与 Hashtable 大致相同。）此类不保证映射的顺序，特别是它不保证该顺序恒久不变 ——摘自百度百科。</p>
+<h2 id="2-2-什么是Hash"><a href="#2-2-什么是Hash" class="headerlink" title="2.2 什么是Hash"></a>2.2 什么是Hash</h2><p>Hash是一种算法，能将一个任意长度的二进制值通过一个映射关系转换成一个固定长度的二进制值。在HashMap中，哈希算法主要是用于根据key的值算出存放数组的index值。HashMap中的存储都是根据key的哈希值有关的。<br>哈希算法又被称为散列的过程，那么什么是散列呢？散列即把数据均匀的存放到数组中的各个位置，从而尽量避免出现多个数据存放在一块区间内。 </p>
+<p>优秀的哈希算法应该具备以下两点：</p>
+<ul>
+<li>保证散列值非常均匀</li>
+<li>保证冲突极少出现</li>
+</ul>
+<p>哈希函数有很多种，在这里我以除留取余法（取模）为例，首先定义一个数组的长度，假设为16。那么此时的索引为key摸于m，m的取值规则是比数组长度小的最大质数。在这个情况下m为13。由于这种算法会导致这样的情况出现，即不同的key经过哈希运算之后得到了一样的index，如key为2和15的index值都为2，那么此时就需要我们处理冲突了。</p>
+<p>Ps. JDK中的hash算法远比这个复杂，在这里我仅仅只是举一个例子方便读者理解。</p>
+<h2 id="2-3-处理冲突"><a href="#2-3-处理冲突" class="headerlink" title="2.3 处理冲突"></a>2.3 处理冲突</h2><ul>
+<li>线性探测法<br>当冲突产生时，查找下一个索引是否被占用，如果没有，则把数据存到该索引上。</li>
+<li>链表形式<br>由于在HashMap中，单个数据是以entry的形式存储的，而entry中包含了key，value和next指针。那么当冲突产生时，我们就把原先存放到这个位置的数据取出来，然后在这个位置存放新的数据，并且把新数据的next指针设为原数据，也就是说链表头位置的数据永远是最新的数据。</li>
+</ul>
+<h1 id="3-实现自己的HashMap"><a href="#3-实现自己的HashMap" class="headerlink" title="3. 实现自己的HashMap"></a>3. 实现自己的HashMap</h1><h2 id="3-1-Map接口"><a href="#3-1-Map接口" class="headerlink" title="3.1 Map接口"></a>3.1 Map接口</h2><p>HashMap的顶层接口是Map，那么我们自己实现的Map也需要一个接口，在这里我定义接口的名称为MyMap&lt;K,V&gt;。这个接口中应该含有的方法包括：</p>
+<ul>
+<li>put(K k,V v)</li>
+<li>get(K k)</li>
+<li>size()</li>
+</ul>
+<p>和一个内部接口</p>
+<ul>
+<li>Entry&lt;K,V&gt;</li>
+</ul>
+<p>这个内部接口中包含两个方法</p>
+<ul>
+<li>getKey()</li>
+<li>getValue()</li>
+</ul>
+<p>代码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * put方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">V <span class="title">put</span><span class="params">(K k, V v)</span></span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * get方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">V <span class="title">get</span><span class="params">(K k)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Entry内部接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;K&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 根据entry对象获取key值</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 根据entry对象获取value值</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function">V <span class="title">getValue</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-2-内部类Entry的实现"><a href="#3-2-内部类Entry的实现" class="headerlink" title="3.2 内部类Entry的实现"></a>3.2 内部类Entry的实现</h2><p>接口设计完毕之后，我们需要创建一个类来实现这个接口的方法。我创建了一个名为MyHashMap的类实现MyMap接口。</p>
+<p>这里我们需要一个内部类来实现MyMap的内部接口，内部类的实例对象即数组中存储的entry对象，所以我们需要定义三个成员变量，分别是K，V和Next。next的类型就是entry本身，因为它指向的是下一个entry对象。</p>
+<p>内部类代码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span>  <span class="title">MyMap</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        K k;</span><br><span class="line">        </span><br><span class="line">        V v;</span><br><span class="line">        </span><br><span class="line">        Entry&lt;K, V&gt; next;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Entry</span><span class="params">(K k, V v, Entry next)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.k = k;</span><br><span class="line">            <span class="keyword">this</span>.v = v;</span><br><span class="line">            <span class="keyword">this</span>.next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> K <span class="title">getKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> k;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> V <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-3-定义成员变量"><a href="#3-3-定义成员变量" class="headerlink" title="3.3 定义成员变量"></a>3.3 定义成员变量</h2><p>HashMap中含有以下几个成员变量：</p>
+<ul>
+<li>默认数组长度</li>
+<li>默认负载因子</li>
+<li>Entry数组</li>
+<li>HashMap的大小</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认数组大小，初始大小为16</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> defaultLength = <span class="number">16</span>;</span><br><span class="line"><span class="comment">//默认负载因子，为0.75</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> defaultLoader = <span class="number">0.75</span>;</span><br><span class="line"><span class="comment">//Entry数组</span></span><br><span class="line"><span class="keyword">private</span> Entry&lt;K, V&gt;[] table = <span class="keyword">null</span>;</span><br><span class="line"><span class="comment">//HashMap的大小</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="3-4-定义构造方法"><a href="#3-4-定义构造方法" class="headerlink" title="3.4 定义构造方法"></a>3.4 定义构造方法</h2><p>在HashMap中默认数组长度和默认负载因子都是可以自定义的，那么我们定义一个可以自定义数组长度和负载因子的构造方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义默认长度和负载因子</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> length</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> loader</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyHashMap</span><span class="params">(<span class="keyword">int</span> length, <span class="keyword">double</span> loader)</span> </span>&#123;</span><br><span class="line">    defaultLength = length;</span><br><span class="line">    defaultLoader = loader;</span><br><span class="line">    <span class="comment">//初始化数组</span></span><br><span class="line">    table = <span class="keyword">new</span> Entry[defaultLength];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果不指定数组长度和负载因子则使用默认值<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用默认值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(defaultLength, defaultLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-5定义哈希函数"><a href="#3-5定义哈希函数" class="headerlink" title="3.5定义哈希函数"></a>3.5定义哈希函数</h2><p>上文已经提过了，哈希函数我们使用除留取余法。定义一个整型m，m的取值应该是一个比数组长度小的最大质数，为了简化算法我取数组的长度作为m的值。以key的哈希值模于m，得到index的值并且返回。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义哈希算法</span></span><br><span class="line"><span class="comment"> * 根据key的哈希值得到一个index索引，即存放到数组中的下标</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getKey</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m = defaultLength;</span><br><span class="line">    <span class="keyword">int</span> index = k.hashCode() % m;</span><br><span class="line">    <span class="keyword">return</span> index &gt;= <span class="number">0</span> ? index : -index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后返回的时候用了一个三元运算符，是为了要确保index的值必须是一个正数。</p>
+<h2 id="3-6-实现put方法"><a href="#3-6-实现put方法" class="headerlink" title="3.6 实现put方法"></a>3.6 实现put方法</h2><p>首先，我们需要通过哈希算法得到数组的下标，然后把一个包含键值对以及next指针的entry对象存到该位置中。</p>
+<p>在存入数组之前我们需要判断当前索引中是否已经存在数据。根据不同情况，做出不同的存储处理，代码中的注释有详细的解释。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K k, V v)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//根据key和哈希算法算出数组下标</span></span><br><span class="line">        <span class="keyword">int</span> index = getKey(k);</span><br><span class="line">        Entry&lt;K, V&gt; entry = table[index];</span><br><span class="line">        <span class="comment">//判断entry是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (entry == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            * 如果entry为空，则代表当前位置没有数据。</span></span><br><span class="line"><span class="comment">            * new一个entry对象，内部存放key，value。</span></span><br><span class="line"><span class="comment">            * 此时next指针没有值，因为这个位置上只有一个entry对象</span></span><br><span class="line"><span class="comment">            * */</span></span><br><span class="line">            table[index] = <span class="keyword">new</span> Entry(k, v, <span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">//map的大小加1</span></span><br><span class="line">            size++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            * 如果entry不为空，则代表当前位置已经有数据了</span></span><br><span class="line"><span class="comment">            * new一个entry对象，内部存放key，value。</span></span><br><span class="line"><span class="comment">            * 把next指针设置为原本的entry对象并且把数组中的数据替换为新的entry对象</span></span><br><span class="line"><span class="comment">            * */</span></span><br><span class="line">            table[index] = <span class="keyword">new</span> Entry&lt;K, V&gt;(k, v, entry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> table[index].getValue();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-7-实现HashMap的扩容"><a href="#3-7-实现HashMap的扩容" class="headerlink" title="3.7 实现HashMap的扩容"></a>3.7 实现HashMap的扩容</h2><p>HashMap的扩容机制是：当map的大小大于默认长度*默认负载因子，那么数组的长度会翻倍，数组中的数据会重新散列然后再存放。那么在原先的put方法中，需要先判断是否达到扩容的标准在进行执行下面的代码。如果达到扩容的标准则需要调用扩容的方法。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数组的扩容</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">expand</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建一个大小是原来两倍的entry数组</span></span><br><span class="line">    Entry&lt;K, V&gt;[] newTable = <span class="keyword">new</span> Entry[<span class="number">2</span> * defaultLength];</span><br><span class="line">    <span class="comment">//重新散列</span></span><br><span class="line">    rehash(newTable);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//重新散列的过程</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rehash</span><span class="params">(Entry&lt;K,V&gt;[] newTable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建一个list用于装载HashMap中所有的entry对象</span></span><br><span class="line">    List&lt;Entry&lt;K, V&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Entry&lt;K, V&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历整个数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;table.length;i++) &#123;</span><br><span class="line">        <span class="comment">//如果数组中的某个位置没有数据，则跳过</span></span><br><span class="line">        <span class="keyword">if</span> (table[i] == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//通过递归的方式将所有的entry对象装载到list中</span></span><br><span class="line">        findEntryByNext(table[i],list);</span><br><span class="line">        <span class="keyword">if</span> (list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//把size重置</span></span><br><span class="line">            size = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//把默认长度设置为原来的两倍</span></span><br><span class="line">            defaultLength = <span class="number">2</span> * defaultLength;</span><br><span class="line"></span><br><span class="line">            table = newTable;</span><br><span class="line">            <span class="keyword">for</span> (Entry&lt;K, V&gt; entry : list) &#123;</span><br><span class="line">                <span class="keyword">if</span> (entry.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//把所有entry的next指针置空</span></span><br><span class="line">                    entry.next = <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//对新table进行散列</span></span><br><span class="line">                put(entry.getKey(), entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">findEntryByNext</span><span class="params">(Entry&lt;K, V&gt; entry,List&lt;Entry&lt;K, V&gt;&gt; list )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (entry != <span class="keyword">null</span> &amp;&amp; entry.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        list.add(entry);</span><br><span class="line">        <span class="comment">//递归调用</span></span><br><span class="line">        findEntryByNext(entry.next,list);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        list.add(entry);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为在put方法中加上了对扩容标准的判断，原先的put方法需要修改<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K k, V v)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//判断size是否达到扩容的标准</span></span><br><span class="line">    <span class="keyword">if</span> (size &gt;= defaultLength * defaultLoader) &#123;</span><br><span class="line">        expand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据key和哈希算法算出数组下标</span></span><br><span class="line">    <span class="keyword">int</span> index = getKey(k);</span><br><span class="line">    Entry&lt;K, V&gt; entry = table[index];</span><br><span class="line">    <span class="comment">//判断entry是否为空</span></span><br><span class="line">    <span class="keyword">if</span> (entry == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 如果entry为空，则代表当前位置没有数据。</span></span><br><span class="line"><span class="comment">        * new一个entry对象，内部存放key，value。</span></span><br><span class="line"><span class="comment">        * 此时next指针没有值，因为这个位置上只有一个entry对象</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        table[index] = <span class="keyword">new</span> Entry(k, v, <span class="keyword">null</span>);</span><br><span class="line">        size++;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 如果entry不为空，则代表当前位置已经有数据了</span></span><br><span class="line"><span class="comment">        * new一个entry对象，内部存放key，value。</span></span><br><span class="line"><span class="comment">        * 把next指针设置为原本的entry对象并且把数组中的数据替换为新的entry对象</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        table[index] = <span class="keyword">new</span> Entry&lt;K, V&gt;(k, v, entry);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> table[index].getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-8-实现get方法"><a href="#3-8-实现get方法" class="headerlink" title="3.8 实现get方法"></a>3.8 实现get方法</h2><p>上文提到了，由于hash算法可能会导致相同的索引中包含了不同的entry对象，我们需要通过对比key值的方式来找到我们真正要的那个entry对象。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取此key对应的entry对象所存放的索引index</span></span><br><span class="line">    <span class="keyword">int</span> index = getKey(k);</span><br><span class="line">    <span class="comment">//非空判断</span></span><br><span class="line">    <span class="keyword">if</span> (table[index] == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调用方法找到真正的value值并返回。</span></span><br><span class="line">    <span class="keyword">return</span> findValueByEqualKey(k,table[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 通过递归比较key值的方式找到真正我们要找的value值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> entry</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">findValueByEqualKey</span><span class="params">(K k , Entry&lt;K,V&gt; entry)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 如果传进来的key等于这个entry的key值，说明这个就是我们要找的entry对象</span></span><br><span class="line"><span class="comment">    * 那么直接返回这个entry的value</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="keyword">if</span> (k == entry.getKey() || k.equals(entry.getKey())) &#123;</span><br><span class="line">        <span class="keyword">return</span> entry.getValue();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 如果不相等，说明这个不是我们要找的entry对象，</span></span><br><span class="line"><span class="comment">        * 通过递归的方式去比较它的next指针中的entry的key值，来找到真正的entry对象</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        <span class="keyword">if</span> (entry.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> findValueByEqualKey(k, entry.next);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于size方法非常简单，直接返回size即可，我直接贴一下代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回HashMap的大小</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>到了这里，HashMap的基本功能已经都写完了，包括put方法、get方法和扩容机制。那么下面我们来测试一下看看自己写的map能否实现功能。</p>
+<h1 id="4-测试MyHashMap"><a href="#4-测试MyHashMap" class="headerlink" title="4. 测试MyHashMap"></a>4. 测试MyHashMap</h1><p>写一个测试类，对比一下我们的HashMap和jdk自带的HashMap，看看输出是否一样。</p>
+<p>测试类代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: Yiheng Chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: Map测试类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: Created in 4:33 2017/9/1</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Modified</span> by:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMapTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        MyHashMap&lt;String,String &gt; map = <span class="keyword">new</span> MyHashMap();</span><br><span class="line"></span><br><span class="line">        Long t1 = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1000</span>;i++) &#123;</span><br><span class="line">            map.put(<span class="string">"key"</span> + i, <span class="string">"value"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"key: "</span> + <span class="string">"key"</span> + i +<span class="string">"---"</span>+ <span class="string">"value: "</span> + map.get(<span class="string">"key"</span> + i));</span><br><span class="line">        &#125;</span><br><span class="line">        Long t2 = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"MyHashMap耗时："</span>+(t2-t1));</span><br><span class="line">        System.out.println(<span class="string">"-------------------HashMap-------------------------"</span> );</span><br><span class="line"></span><br><span class="line">        Map&lt;String,String &gt; hashMap = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line">        Long t3 = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1000</span>;i++) &#123;</span><br><span class="line">            hashMap.put(<span class="string">"key"</span> + i, <span class="string">"value"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"key: "</span> + <span class="string">"key"</span> + i + <span class="string">"---"</span>+ <span class="string">"value: "</span> + hashMap.get(<span class="string">"key"</span> + i));</span><br><span class="line">        &#125;</span><br><span class="line">        Long t4 = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"JDK的HashMap耗时："</span>+(t4-t3));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>部分结果的截取：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">key: key980---value: value980</span><br><span class="line">key: key981---value: value981</span><br><span class="line">key: key982---value: value982</span><br><span class="line">key: key983---value: value983</span><br><span class="line">key: key984---value: value984</span><br><span class="line">key: key985---value: value985</span><br><span class="line">key: key986---value: value986</span><br><span class="line">key: key987---value: value987</span><br><span class="line">key: key988---value: value988</span><br><span class="line">key: key989---value: value989</span><br><span class="line">key: key990---value: value990</span><br><span class="line">key: key991---value: value991</span><br><span class="line">key: key992---value: value992</span><br><span class="line">key: key993---value: value993</span><br><span class="line">key: key994---value: value994</span><br><span class="line">key: key995---value: value995</span><br><span class="line">key: key996---value: value996</span><br><span class="line">key: key997---value: value997</span><br><span class="line">key: key998---value: value998</span><br><span class="line">key: key999---value: value999</span><br></pre></td></tr></table></figure></p>
+<p>可以发现MyHashMap的输出和JDK的HashMap是完全一样的，那么说明了这个自己实现的HashMap功能已经基本实现。</p>
+<p>然后我又在这个基础上测试了一下耗时，结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyHashMap耗时：30</span><br><span class="line">-----------------------</span><br><span class="line">JDK的HashMap耗时：19</span><br></pre></td></tr></table></figure></p>
+<p>性能上自然是JDK的HashMap更强大，这个毋庸置疑，JDK中的HashMap可以说是最优化的map实现了，我们自己实现的肯定不如人家的。但是这个性能已经是不错的了。</p>
+<p>至此，我们已经完整的实现了一个自己的HashMap，希望这篇文章对你有帮助。</p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+	
+	<div>
+      
+        ﻿
+      
+	</div>
+
+    
+
+    
+	
+	
+	<div>
+		
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------End of the post-------------</div>
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  
+  <p><span>Title:</span><a href="/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/">自己动手实现一个HashMap</a></p>
+  <p><span>Author:</span><a href="/" title="Visit Yiheng Chen personal blog">Yiheng Chen</a></p>
+  <p><span>Post time:</span>2017-08-26 - 17:08</p>
+  <p><span>Last update:</span>2022-06-11 - 18:06</p>
+  <p><span>Link:</span><a href="/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/" title="自己动手实现一个HashMap">https://winnerchen.github.io/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/</a>
+    <span class="copy-path" title="click to copy the link"><i class="fa fa-clipboard" data-clipboard-text="https://winnerchen.github.io/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/" aria-label="copy to clipboard！"></i></span>
+  </p>
+  <p><span>Agreement:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a> Please retain the original link and author.</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: 'copied',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+    
+	
+</div>
+		
+		
+		
+	</div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/" rel="next" title="Hexo+Node.js+GitHub搭建自己的个人博客">
+                <i class="fa fa-chevron-left"></i> Hexo+Node.js+GitHub搭建自己的个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/" rel="prev" title="Implement your own HashMap">
+                Implement your own HashMap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+  
+  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/yiheng.github.io/images/photo.png" alt="Yiheng Chen">
+          <p class="site-author-name" itemprop="name">Yiheng Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/yiheng.github.io/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/yiheng.github.io/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/yiheng.github.io/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/yiheng.github.io/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HashMap的原理"><span class="nav-number">2.</span> <span class="nav-text">2. HashMap的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-什么是HashMap？"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 什么是HashMap？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-什么是Hash"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 什么是Hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-处理冲突"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 处理冲突</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-实现自己的HashMap"><span class="nav-number">3.</span> <span class="nav-text">3. 实现自己的HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Map接口"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Map接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-内部类Entry的实现"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 内部类Entry的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-定义成员变量"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 定义成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-定义构造方法"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 定义构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5定义哈希函数"><span class="nav-number">3.5.</span> <span class="nav-text">3.5定义哈希函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-实现put方法"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 实现put方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-实现HashMap的扩容"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 实现HashMap的扩容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-实现get方法"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 实现get方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-测试MyHashMap"><span class="nav-number">4.</span> <span class="nav-text">4. 测试MyHashMap</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yiheng Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/yiheng.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NgYKO4HdCt1Q5ceUi67P8bRc-gzGzoHsz", "KTvNwn7mULzwlv3aXwgfIGGg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

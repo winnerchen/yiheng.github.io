@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/yiheng.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/yiheng.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/yiheng.github.io/atom.xml" title="Chen's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/yiheng.github.io/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1. IntroductionAs one of the important members of data structure in Java, HashMap has high performance in both insertion and query. Recently, I have learnt to know its power when I was working on the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implement your own HashMap">
+<meta property="og:url" content="https://winnerchen.github.io/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/index.html">
+<meta property="og:site_name" content="Chen&#39;s Blog">
+<meta property="og:description" content="1. IntroductionAs one of the important members of data structure in Java, HashMap has high performance in both insertion and query. Recently, I have learnt to know its power when I was working on the">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-06-11T08:38:55.970Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Implement your own HashMap">
+<meta name="twitter:description" content="1. IntroductionAs one of the important members of data structure in Java, HashMap has high performance in both insertion and query. Recently, I have learnt to know its power when I was working on the">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/yiheng.github.io/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://winnerchen.github.io/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/">
+
+
+
+
+
+  <title>Implement your own HashMap | Chen's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/winnerchen/yiheng.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/yiheng.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/yiheng.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/yiheng.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/yiheng.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/yiheng.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/yiheng.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/yiheng.github.io/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://winnerchen.github.io/yiheng.github.io/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yiheng Chen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/yiheng.github.io/images/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Implement your own HashMap</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:37:44+10:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/" class="leancloud_visitors" data-flag-title="Implement your own HashMap">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>As one of the important members of data structure in Java, HashMap has high performance in both insertion and query. Recently, I have learnt to know its power when I was working on the project. HashMap provides both high flexibility and scalability for font and back end data interactions that cannot be replaced by other data structures. Its key-value pair structure naturally provides good support for Json transformation. This article mainly analysis the theory of HashMap and how to implement your own HashMap.<br><a id="more"></a></p>
+<h1 id="2-Theory-of-HashMap"><a href="#2-Theory-of-HashMap" class="headerlink" title="2. Theory of HashMap"></a>2. Theory of HashMap</h1><h2 id="2-1-What-is-HashMap？"><a href="#2-1-What-is-HashMap？" class="headerlink" title="2.1 What is HashMap？"></a>2.1 What is HashMap？</h2><p>In computing, a hash table (hash map) is a data structure which implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found. – From Wikipedia, the free encyclopedia</p>
+<h2 id="2-2-What-is-hash"><a href="#2-2-What-is-hash" class="headerlink" title="2.2 What is hash"></a>2.2 What is hash</h2><p>Hash is an algorithm, which can map a binary value with random length to a binary value with fixed length. In a HashMap, hash algorithm is mainly used to calculate the index that its value needs to be stored in. In one word, the storage process of a value is based on the hash value of its key.</p>
+<p>The performance of a hash algorithm depends on whether it can store data into an array with good distribution so that collisions can be avoided. </p>
+<p>There are many hash functions existed, and I will take division method as an example. First, define the length of an array, 16 for example (16 is also the default length of HashMap in JDK). Therefore, the index should be key mod m, and the value of m should be the maximum prime number that is less than the length of the array.m is therefore is 13 in this case. Such algorithm would lead to situation like this: we might get same index for different given keys. If that’s the case, we need to handle collisions. </p>
+<p>Ps. The hash algorithm in JDK is much more complicated. The example above is just an example for readers to understand more easily. </p>
+<h2 id="2-3-Handling-collisions"><a href="#2-3-Handling-collisions" class="headerlink" title="2.3 Handling collisions"></a>2.3 Handling collisions</h2><p>There are many solutions to handle collisions, and in this article I will introduce two methods and I will demonstrate how to solve this issue with one of them.</p>
+<ul>
+<li>Linear Probing<br>When collision happens, find whether next index has been occupied or not, if not then store data into that index. If it is already occupied, repeat previous process until it finds a slot.</li>
+<li>Linked list<br>Since data is stored in the form of entry object in HashMap, and an entry contains key, value and next pointer. Therefore we can handle collisions using LinkedList form, that is taking out the original data in this slot and place new data into it and then set the next pointer to the original data, which means the head of the this linkedlist is always the latest data. </li>
+</ul>
+<h1 id="3-Implement-your-HashMap"><a href="#3-Implement-your-HashMap" class="headerlink" title="3. Implement your HashMap"></a>3. Implement your HashMap</h1><h2 id="3-1-Map-Interface"><a href="#3-1-Map-Interface" class="headerlink" title="3.1 Map Interface"></a>3.1 Map Interface</h2><p>The top interface of HashMap is Map, which means we need our own interface if we want to implement our own map. The map interface of our HashMap is defined as MyMap&lt;K,V&gt; and it should have these three functions:</p>
+<ul>
+<li>put(K k,V v)</li>
+<li>get(K k)</li>
+<li>size()</li>
+</ul>
+<p>and an internal interface</p>
+<ul>
+<li>Entry&lt;K,V&gt;</li>
+</ul>
+<p>It should contains two functions</p>
+<ul>
+<li>getKey()</li>
+<li>getValue()</li>
+</ul>
+<p>Java code:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * put function</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">V <span class="title">put</span><span class="params">(K k, V v)</span></span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * get function</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">V <span class="title">get</span><span class="params">(K k)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Entry interface</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;K&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * get the key in an entry object</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * get the value in an entry object</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function">V <span class="title">getValue</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-2-Implementation-of-internal-class-Entry"><a href="#3-2-Implementation-of-internal-class-Entry" class="headerlink" title="3.2 Implementation of internal class Entry"></a>3.2 Implementation of internal class Entry</h2><p>Once the interface is designed, we need to create a class to implement all its functions. The class MyHashMap is created to implement MyMap interface.</p>
+<p>An internal class is also necessary for the implementation of internal interface of MyMap. The instance of this internal class is entry, which will be stored into the array. This class should have three global variables, which are K, V and Next pointer. The type of next is entry itself because it points to the next entry object.</p>
+<p>Java code:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span>  <span class="title">MyMap</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        K k;</span><br><span class="line">        </span><br><span class="line">        V v;</span><br><span class="line">        </span><br><span class="line">        Entry&lt;K, V&gt; next;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Entry</span><span class="params">(K k, V v, Entry next)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.k = k;</span><br><span class="line">            <span class="keyword">this</span>.v = v;</span><br><span class="line">            <span class="keyword">this</span>.next = next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> K <span class="title">getKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> k;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> V <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-3-Define-global-variables"><a href="#3-3-Define-global-variables" class="headerlink" title="3.3 Define global variables"></a>3.3 Define global variables</h2><p>A hashmap contains the following global variables:</p>
+<ul>
+<li>default length of the array</li>
+<li>default loading factor</li>
+<li>an entry array</li>
+<li>the size of this hashmap</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Default length of the array, initial value is 16</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> defaultLength = <span class="number">16</span>;</span><br><span class="line"><span class="comment">//Loading factor, 0.75 by default</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> defaultLoader = <span class="number">0.75</span>;</span><br><span class="line"><span class="comment">//Entry array</span></span><br><span class="line"><span class="keyword">private</span> Entry&lt;K, V&gt;[] table = <span class="keyword">null</span>;</span><br><span class="line"><span class="comment">//The size of this hashmap</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="3-4-Define-constructor"><a href="#3-4-Define-constructor" class="headerlink" title="3.4 Define constructor"></a>3.4 Define constructor</h2><p>Since the default length and default loading factor can be customized in HashMap, we can define a constructor with array length and loading factor as parameters.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * customize default array length and loading factor</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> length</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> loader</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyHashMap</span><span class="params">(<span class="keyword">int</span> length, <span class="keyword">double</span> loader)</span> </span>&#123;</span><br><span class="line">    defaultLength = length;</span><br><span class="line">    defaultLoader = loader;</span><br><span class="line">    <span class="comment">//initialize entry array</span></span><br><span class="line">    table = <span class="keyword">new</span> Entry[defaultLength];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>If parameters are not specified, we use default value<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * use default values</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(defaultLength, defaultLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-5-Define-hash-function"><a href="#3-5-Define-hash-function" class="headerlink" title="3.5 Define hash function"></a>3.5 Define hash function</h2><p>It is mentioned above that we are using mod method for our hash function. First define an int m, the value of m should be the maximum prime number that is less than the length of its array. I set the value of m to be the length of the array to simplify the algorithm.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * customize hash algorithm</span></span><br><span class="line"><span class="comment"> * get the value of index from the hash value of its key, it is the index in which data needs to be stored</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getKey</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m = defaultLength;</span><br><span class="line">    <span class="keyword">int</span> index = k.hashCode() % m;</span><br><span class="line">    <span class="keyword">return</span> index &gt;= <span class="number">0</span> ? index : -index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-6-Implement-put-function"><a href="#3-6-Implement-put-function" class="headerlink" title="3.6 Implement put function"></a>3.6 Implement put function</h2><p>First, we need calculate the index of the array using hash algorithm, and then store the entry object that contains key, value and next pointer to that slot.</p>
+<p>Before we do that we need to determine if that slot is occupied. It should be handled differently according to the situation. Detailed explanations are given in the comments.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K k, V v)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//calculate the index of a given key</span></span><br><span class="line">        <span class="keyword">int</span> index = getKey(k);</span><br><span class="line">        Entry&lt;K, V&gt; entry = table[index];</span><br><span class="line">        <span class="comment">//determine if entry is null</span></span><br><span class="line">        <span class="keyword">if</span> (entry == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            * if entry is null, it means there is no data in this slot</span></span><br><span class="line"><span class="comment">            * create an entry object</span></span><br><span class="line"><span class="comment">            * next pointer has no value at this moment because there is only</span></span><br><span class="line"><span class="comment">            * one entry object in this slot</span></span><br><span class="line"><span class="comment">            * */</span></span><br><span class="line">            table[index] = <span class="keyword">new</span> Entry(k, v, <span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">//size of map + 1</span></span><br><span class="line">            size++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            * if entry is not null, it means there is at least one entry in</span></span><br><span class="line"><span class="comment">            * this slot</span></span><br><span class="line"><span class="comment">            * create an entry object</span></span><br><span class="line"><span class="comment">            * set the next pointer to be previous entry and replace the data</span></span><br><span class="line"><span class="comment">            * in the array</span></span><br><span class="line"><span class="comment">            * */</span></span><br><span class="line">            table[index] = <span class="keyword">new</span> Entry&lt;K, V&gt;(k, v, entry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> table[index].getValue();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-7-Implement-resize-mechanism-of-HashMap"><a href="#3-7-Implement-resize-mechanism-of-HashMap" class="headerlink" title="3.7 Implement resize mechanism of HashMap"></a>3.7 Implement resize mechanism of HashMap</h2><p>The principle of resize in hashmap is that when the size of map is greater than default length * loading factor, the length of the array will be doubled and data in the array will be rehashed and restored. Therefore, in previous put function, we need to first determine if the size of hashmap has reach the boundary of resize, and then execute rest of the code. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//resize of the array</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">expand</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//create an entry array that its length is two times as previous</span></span><br><span class="line">    Entry&lt;K, V&gt;[] newTable = <span class="keyword">new</span> Entry[<span class="number">2</span> * defaultLength];</span><br><span class="line">    <span class="comment">//call rehash function</span></span><br><span class="line">    rehash(newTable);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//the process of rehash</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rehash</span><span class="params">(Entry&lt;K,V&gt;[] newTable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//create a list to store all the entry objects in the hashmap</span></span><br><span class="line">    List&lt;Entry&lt;K, V&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Entry&lt;K, V&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//traverse the array</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;table.length;i++) &#123;</span><br><span class="line">        <span class="comment">//continue if the given slot has no data</span></span><br><span class="line">        <span class="keyword">if</span> (table[i] == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//store all entries into the list using recursive method</span></span><br><span class="line">        findEntryByNext(table[i],list);</span><br><span class="line">        <span class="keyword">if</span> (list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//reset size</span></span><br><span class="line">            size = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//double the default size</span></span><br><span class="line">            defaultLength = <span class="number">2</span> * defaultLength;</span><br><span class="line"></span><br><span class="line">            table = newTable;</span><br><span class="line">            <span class="keyword">for</span> (Entry&lt;K, V&gt; entry : list) &#123;</span><br><span class="line">                <span class="keyword">if</span> (entry.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//set next pointer of all entries to null</span></span><br><span class="line">                    entry.next = <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//rehash new table</span></span><br><span class="line">                put(entry.getKey(), entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">findEntryByNext</span><span class="params">(Entry&lt;K, V&gt; entry,List&lt;Entry&lt;K, V&gt;&gt; list )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (entry != <span class="keyword">null</span> &amp;&amp; entry.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        list.add(entry);</span><br><span class="line">        <span class="comment">//call recursive function</span></span><br><span class="line">        findEntryByNext(entry.next,list);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        list.add(entry);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-8-Implement-get-function"><a href="#3-8-Implement-get-function" class="headerlink" title="3.8 Implement get function"></a>3.8 Implement get function</h2><p>As it is mentioned above, the nature of hash algorithm might lead to the scenario that multiple entries stored in the same index. Therefore, we need to find the real entry object by comparing the key value.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(K k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//get the index that the entry is stored</span></span><br><span class="line">    <span class="keyword">int</span> index = getKey(k);</span><br><span class="line">    <span class="comment">//non-empty check</span></span><br><span class="line">    <span class="keyword">if</span> (table[index] == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//call function to find the real value and then return</span></span><br><span class="line">    <span class="keyword">return</span> findValueByEqualKey(k,table[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * find real value by recursive comparison</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> entry</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">findValueByEqualKey</span><span class="params">(K k , Entry&lt;K,V&gt; entry)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * if key of this parameter equals to the key of this entry, that means</span></span><br><span class="line"><span class="comment">    * this is the target entry</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="keyword">if</span> (k == entry.getKey() || k.equals(entry.getKey())) &#123;</span><br><span class="line">        <span class="keyword">return</span> entry.getValue();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * if they are not equal, use recursive method to compare the key of its next pointer to find the real value</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        <span class="keyword">if</span> (entry.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> findValueByEqualKey(k, entry.next);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Since the size function is rather easy, all we need to do is return the variable size, I just paste the code here.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//return the size of the map</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>At this point, the basic function of a HashMap is completed. That includes put function, get function and its resize mechanism. In the next section, I will write a test class to test the code see if they are implemented correctly. In the meantime, its performacne needs to be tested as well.</p>
+<h1 id="4-Test-MyHashMap"><a href="#4-Test-MyHashMap" class="headerlink" title="4. Test MyHashMap"></a>4. Test MyHashMap</h1><h2 id="4-1-Output-test"><a href="#4-1-Output-test" class="headerlink" title="4.1 Output test"></a>4.1 Output test</h2><p>Write a test class to check if the output of our HashMap and the output of HashMap in JDK are the same.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: Yiheng Chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: Map test class</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: Created in 4:33 2017/9/1</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Modified</span> by:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMapTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        MyHashMap&lt;String,String &gt; map = <span class="keyword">new</span> MyHashMap();</span><br><span class="line"></span><br><span class="line">        Long t1 = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1000</span>;i++) &#123;</span><br><span class="line">            map.put(<span class="string">"key"</span> + i, <span class="string">"value"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"key: "</span> + <span class="string">"key"</span> + i +<span class="string">"---"</span>+ <span class="string">"value: "</span> + map.get(<span class="string">"key"</span> + i));</span><br><span class="line">        &#125;</span><br><span class="line">        Long t2 = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"time consumed by MyHashMap："</span>+(t2-t1));</span><br><span class="line">        System.out.println(<span class="string">"-------------------HashMap-------------------------"</span> );</span><br><span class="line"></span><br><span class="line">        Map&lt;String,String &gt; hashMap = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line">        Long t3 = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1000</span>;i++) &#123;</span><br><span class="line">            hashMap.put(<span class="string">"key"</span> + i, <span class="string">"value"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"key: "</span> + <span class="string">"key"</span> + i + <span class="string">"---"</span>+ <span class="string">"value: "</span> + hashMap.get(<span class="string">"key"</span> + i));</span><br><span class="line">        &#125;</span><br><span class="line">        Long t4 = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"time consumed by HashMap in JDK: "</span>+(t4-t3));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Part of the output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">key: key980---value: value980</span><br><span class="line">key: key981---value: value981</span><br><span class="line">key: key982---value: value982</span><br><span class="line">key: key983---value: value983</span><br><span class="line">key: key984---value: value984</span><br><span class="line">key: key985---value: value985</span><br><span class="line">key: key986---value: value986</span><br><span class="line">key: key987---value: value987</span><br><span class="line">key: key988---value: value988</span><br><span class="line">key: key989---value: value989</span><br><span class="line">key: key990---value: value990</span><br><span class="line">key: key991---value: value991</span><br><span class="line">key: key992---value: value992</span><br><span class="line">key: key993---value: value993</span><br><span class="line">key: key994---value: value994</span><br><span class="line">key: key995---value: value995</span><br><span class="line">key: key996---value: value996</span><br><span class="line">key: key997---value: value997</span><br><span class="line">key: key998---value: value998</span><br><span class="line">key: key999---value: value999</span><br></pre></td></tr></table></figure></p>
+<p>It can be seen that the result of our HashMap is excatly the same as the output of HashMap in JDK. It indicates that our HashMap is successfully implemented.</p>
+<h2 id="4-2-Performance-test"><a href="#4-2-Performance-test" class="headerlink" title="4.2 Performance test"></a>4.2 Performance test</h2><p>Result of the performance test:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">time consumed by MyHashMap：30</span><br><span class="line">-----------------------</span><br><span class="line">time consumed by HashMap in JDK：19</span><br></pre></td></tr></table></figure></p>
+<p>Without doubt, the HashMap in JDK is obviously more powerful than the one I implemented. The HashMap in JDK may be the most optimized implementation of map. However, the performance of our own HashMap can be considered acceptable, given the simplicity of the code.</p>
+<p>Thanks for reading.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+	
+	<div>
+      
+        ﻿
+      
+	</div>
+
+    
+
+    
+	
+	
+	<div>
+		
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------End of the post-------------</div>
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  
+  <p><span>Title:</span><a href="/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/">Implement your own HashMap</a></p>
+  <p><span>Author:</span><a href="/" title="Visit Yiheng Chen personal blog">Yiheng Chen</a></p>
+  <p><span>Post time:</span>2017-09-05 - 14:09</p>
+  <p><span>Last update:</span>2022-06-11 - 18:06</p>
+  <p><span>Link:</span><a href="/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/" title="Implement your own HashMap">https://winnerchen.github.io/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/</a>
+    <span class="copy-path" title="click to copy the link"><i class="fa fa-clipboard" data-clipboard-text="https://winnerchen.github.io/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/" aria-label="copy to clipboard！"></i></span>
+  </p>
+  <p><span>Agreement:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a> Please retain the original link and author.</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: 'copied',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+    
+	
+</div>
+		
+		
+		
+	</div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/" rel="next" title="自己动手实现一个HashMap">
+                <i class="fa fa-chevron-left"></i> 自己动手实现一个HashMap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/10/19/Spring-Introduction/" rel="prev" title="Spring QuickStart">
+                Spring QuickStart <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+  
+  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/yiheng.github.io/images/photo.png" alt="Yiheng Chen">
+          <p class="site-author-name" itemprop="name">Yiheng Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/yiheng.github.io/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/yiheng.github.io/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/yiheng.github.io/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/yiheng.github.io/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Theory-of-HashMap"><span class="nav-number">2.</span> <span class="nav-text">2. Theory of HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-What-is-HashMap？"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 What is HashMap？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-What-is-hash"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 What is hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Handling-collisions"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Handling collisions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Implement-your-HashMap"><span class="nav-number">3.</span> <span class="nav-text">3. Implement your HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Map-Interface"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Map Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-Implementation-of-internal-class-Entry"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Implementation of internal class Entry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-Define-global-variables"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Define global variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Define-constructor"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Define constructor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-Define-hash-function"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 Define hash function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-Implement-put-function"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 Implement put function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-Implement-resize-mechanism-of-HashMap"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 Implement resize mechanism of HashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-Implement-get-function"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 Implement get function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Test-MyHashMap"><span class="nav-number">4.</span> <span class="nav-text">4. Test MyHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Output-test"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Output test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Performance-test"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Performance test</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yiheng Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/yiheng.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NgYKO4HdCt1Q5ceUi67P8bRc-gzGzoHsz", "KTvNwn7mULzwlv3aXwgfIGGg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

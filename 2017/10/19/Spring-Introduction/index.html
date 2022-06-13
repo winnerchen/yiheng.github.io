@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/yiheng.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/yiheng.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/yiheng.github.io/atom.xml" title="Chen's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/yiheng.github.io/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1. Introduction1.1 What is SpringThe Spring Framework is an open-source application framework that is hierarchical, full-stack and lightweight. 1.1.1 JavaEE HierarchyThree-layer structural system of J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring QuickStart">
+<meta property="og:url" content="https://winnerchen.github.io/yiheng.github.io/2017/10/19/Spring-Introduction/index.html">
+<meta property="og:site_name" content="Chen&#39;s Blog">
+<meta property="og:description" content="1. Introduction1.1 What is SpringThe Spring Framework is an open-source application framework that is hierarchical, full-stack and lightweight. 1.1.1 JavaEE HierarchyThree-layer structural system of J">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_5.png">
+<meta property="og:updated_time" content="2022-06-11T08:38:55.971Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring QuickStart">
+<meta name="twitter:description" content="1. Introduction1.1 What is SpringThe Spring Framework is an open-source application framework that is hierarchical, full-stack and lightweight. 1.1.1 JavaEE HierarchyThree-layer structural system of J">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/yiheng.github.io/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://winnerchen.github.io/yiheng.github.io/2017/10/19/Spring-Introduction/">
+
+
+
+
+
+  <title>Spring QuickStart | Chen's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/winnerchen/yiheng.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/yiheng.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/yiheng.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/yiheng.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/yiheng.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/yiheng.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/yiheng.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/yiheng.github.io/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://winnerchen.github.io/yiheng.github.io/yiheng.github.io/2017/10/19/Spring-Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yiheng Chen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/yiheng.github.io/images/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring QuickStart</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-19T18:37:02+11:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/yiheng.github.io/2017/10/19/Spring-Introduction/" class="leancloud_visitors" data-flag-title="Spring QuickStart">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><h2 id="1-1-What-is-Spring"><a href="#1-1-What-is-Spring" class="headerlink" title="1.1 What is Spring"></a>1.1 What is Spring</h2><p>The Spring Framework is an open-source application framework that is hierarchical, full-stack and lightweight.</p>
+<h3 id="1-1-1-JavaEE-Hierarchy"><a href="#1-1-1-JavaEE-Hierarchy" class="headerlink" title="1.1.1 JavaEE Hierarchy"></a>1.1.1 JavaEE Hierarchy</h3><p>Three-layer structural system of JavaEE standard:</p>
+<ul>
+<li>Presentation Layer(display of webpage data, navigation and dispatch of webpage), e.g. Jsp/Servlet.</li>
+<li>Business Logic Layer(business process, function logics and transaction control), e.g. service</li>
+<li>Data Presistence Layer(data access and encapuslation, interaction with database), e.g. dao<a id="more"></a>
+</li>
+</ul>
+<p>They are illustrated in below image.<br><img src="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_1.png" alt></p>
+<h3 id="1-1-2-Full-Stack"><a href="#1-1-2-Full-Stack" class="headerlink" title="1.1.2 Full Stack:"></a>1.1.2 Full Stack:</h3><p>Spring Framework provides solutions for all JavaEE layers</p>
+<ul>
+<li>Presentation Layer: Struts2, SpringMVC</li>
+<li>Business Logic Layer: IOC, AOP, Transaction control</li>
+<li>Data Presistence Layer（JDBCTemplate, HibernateTemplate, ORM framework integration)</li>
+</ul>
+<h3 id="1-1-3-Lightweight"><a href="#1-1-3-Lightweight" class="headerlink" title="1.1.3 Lightweight:"></a>1.1.3 Lightweight:</h3><p>The introduction of Spring has replaced its previous framework, EJB, which is inefficient, cumbersome and complex.Not to mention that using Spring to program is non-invasive.</p>
+<h2 id="1-2-System-Architecture-of-Spring"><a href="#1-2-System-Architecture-of-Spring" class="headerlink" title="1.2 System Architecture of Spring"></a>1.2 System Architecture of Spring</h2><p>The Spring framework is a hierarchical architecture that contains a set of functional elements and  is divided into about 20 modules. These modules are Core Container, Data Access/Integration, WEB, AOP(Aspect Oriented Programming), Instrumentation and testing part, as shown in below figure:<br><img src="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_2.png" alt></p>
+<h3 id="1-2-1-Core-Container"><a href="#1-2-1-Core-Container" class="headerlink" title="1.2.1 Core Container"></a>1.2.1 Core Container</h3><ul>
+<li>It includes 4 modules: <font color="red">Core, Beans, Context and Express Language</font></li>
+<li><font color="red">Core and Beans module</font> provide the most fundamental functions of Spring: IoC(Inversion of control) and DI(Dependency Injection). The basic concept here is BeanFactory, which provides a classic implementation of the Factory pattern to eliminate the need for singleton patterns and utimately allows you to separate dependencies and configurations from program logic.</li>
+<li>The <font color="red">Context module</font> is built on Core and Beans module, which provides the function of accessing to objects in a framework style. The Context wrapper inherits the functionality of beans package, which also includes internationalization(I18N), event propagation, resource loading, and transparent construct contexts, as well as support for a large number of JavaEE features such as EJB and JMX. It’s core interface is ApplicationContext. </li>
+<li>The <font color="red">Expression Language module</font> provides the ability to query and manipulate object graphs during runtime. It supports access and modification for attribute values, arrays, containers and indexers. It also provides support for arithmetic and logical operations, list projections, selection and general list aggregation, as well as support for object access from Spring container. </li>
+</ul>
+<h3 id="1-2-2-Data-Access-Integration"><a href="#1-2-2-Data-Access-Integration" class="headerlink" title="1.2.2 Data Access/Integration"></a>1.2.2 Data Access/Integration</h3><ul>
+<li><font color="red">JDBC module</font> provides an abstraction of JDBC that eliminates the lengthy JDBC encoding and parsing database vendor-specific error code.</li>
+<li><font color="red">ORM module</font> provides an integrated layer of commonly used “object / relational” mapping APIs, including JPA, JDO, Hibernate and iBatis. With the ORM package, you can mix all the features provided by Spring to support “object/relation”mappings, such as simple declarative transaction management.</li>
+<li><font color="red">Jms module</font> provides a set of “message producer/consumer” template to simplify the use of Jms. JMS is employed between two applications, or sending message in distributive system to implement asynchronous communication. </li>
+<li><font color="red">Transaction module</font> provides support for simple declarative transaction management. Objects that are managed by Spring can all benefit from Spring transaction management, even it is a POJO e.g. Spring can also provide transaction control to POJO.</li>
+</ul>
+<h3 id="1-2-3-Web"><a href="#1-2-3-Web" class="headerlink" title="1.2.3 Web"></a>1.2.3 Web</h3><ul>
+<li><font color="red">Web module</font> provides fundamental web functions, such as multi-file upload, integration of IoC container, remote process access, and support for Web Service. It also provides a RestTemplate class to improve the convenience of Restful services access.</li>
+<li><font color="red">Web-Servlet module</font> provides a Model-View-Controller (MVC) implementation for Web applications. The Spring MVC framework provides annotation-based request resource injection, simpler data binding, data validation, and a set of easy-to-use JSP tags that work seamlessly with other Spring technologies.</li>
+<li><font color="red">Web-Struts module</font> provides support for Struts integration, this feature is not recommended in the Spring3.0, it is recommended that you should transfer to Struts2.0 or Spring MVC.</li>
+<li><font color="red">Web-Protlet module</font> provides the implementation under Portlet environment.</li>
+</ul>
+<h3 id="1-2-4-AOP"><a href="#1-2-4-AOP" class="headerlink" title="1.2.4 AOP"></a>1.2.4 AOP</h3><ul>
+<li>The <font color="red">AOP module</font> provides an aspect-oriented programming implementation that conforms to the AOP alliance specification so that you can define method interceptors and cutting points. Logically, it can reduce the code coupling so that functions be clearly separated. Moreover, the use of source-level metadata function, you can also combine a variety of behavioral information into your code.</li>
+<li>The <font color="red">Aspect module</font> provides integration for AspectJ</li>
+<li>The <font color="red">Instrumentation module</font> provides tool support for class-level and implementation for ClassLoader-level that can be used in some specific application servers.</li>
+</ul>
+<h3 id="1-2-5-Test"><a href="#1-2-5-Test" class="headerlink" title="1.2.5 Test"></a>1.2.5 Test</h3><ul>
+<li>The <font color="red">Test module</font> provides support for testing Spring components using JUnit and TestNG, which provide consistent ApplicationContexts to cache these contexts. It also provides some mock objects that allow you to test your code independently.</li>
+</ul>
+<h2 id="1-3-The-core-of-Spring"><a href="#1-3-The-core-of-Spring" class="headerlink" title="1.3 The core of Spring"></a>1.3 The core of Spring</h2><ul>
+<li>IoC(Inversion of control): Handover the management of objects to Spring factory.</li>
+<li>AOP(Aspect Oriented Programming): Functional enhancement based on dynamic proxy</li>
+</ul>
+<h2 id="1-4-The-advantages-of-Spring"><a href="#1-4-The-advantages-of-Spring" class="headerlink" title="1.4 The advantages of Spring"></a>1.4 The advantages of Spring</h2><p>The introduction of Spring aims to solve the practical issues of JavaEE:</p>
+<ul>
+<li>Remove dependency and simplify development<ul>
+<li>Spring is a large factory that can manage the creation and dependency maintenance of any objects</li>
+</ul>
+</li>
+<li>Support for AOP<ul>
+<li>Spring provides support for AOP, which can easily implement functions such as access control, runtime monitoring, logging and etc.</li>
+</ul>
+</li>
+<li>Support for declarative transaction control<ul>
+<li>Implement the management of transaction by configuration file, without manual program.</li>
+</ul>
+</li>
+<li>More convenient program testing<ul>
+<li>Spring provides support for JUnit4, which allows us to test Spring program conveniently by annotation.</li>
+</ul>
+</li>
+<li>Provide integration for a variety of excellent frameworks<ul>
+<li>Spring does not exclude other well designed open source framework. It provides direct support for other excellent framework such as Struts2, Hibernate, MyBatis, Quartz, etc.</li>
+</ul>
+</li>
+<li>Reduce the complexity of using JavaEE API<ul>
+<li>Spring provides encapsulation for APIs that are difficult to use during JavaEE development, such as JDBC, JavaMail, remote method invocation, etc. </li>
+</ul>
+</li>
+</ul>
+<h1 id="2-Spring-IoC-quick-start"><a href="#2-Spring-IoC-quick-start" class="headerlink" title="2. Spring IoC quick start"></a>2. Spring IoC quick start</h1><p>Basic development procedure of Spring core context</p>
+<ul>
+<li>Download development package, import jar</li>
+<li>Coding</li>
+<li>Write configuration file</li>
+</ul>
+<h2 id="2-1-Coding"><a href="#2-1-Coding" class="headerlink" title="2.1 Coding"></a>2.1 Coding</h2><h3 id="2-1-1-Traditional-Business-logic-coding-business-layer-data-persistence-layer"><a href="#2-1-1-Traditional-Business-logic-coding-business-layer-data-persistence-layer" class="headerlink" title="2.1.1 Traditional Business logic coding (business layer, data persistence layer)"></a>2.1.1 Traditional Business logic coding (business layer, data persistence layer)</h3><p>The example I use here is simulation of user login operation</p>
+<ol>
+<li><p>Create interface IUserDao</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//query data from database according to username and password</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findByUsernameAndPassword</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create implementation class of interface IUserDao</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Implementation class of dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title">IUserDao</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findByUsernameAndPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"function findUserByUsernameAndPassword of UserDaoImpl has been called..."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create interface IUserService</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//business layer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserService</span> </span>&#123;</span><br><span class="line">	<span class="comment">//login</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create implementation class of interface IUserService</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Business layer implementation</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">IUserService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"UserServiceImpl_login function has been called..."</span>);</span><br><span class="line">		<span class="comment">//instantiate dao</span></span><br><span class="line">		IUserDao userDao = <span class="keyword">new</span> UserDaoImpl();</span><br><span class="line">		userDao.findByUsernameAndPassword();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Test</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringTest</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//create service instance</span></span><br><span class="line">		IUserService userService = <span class="keyword">new</span> UserServiceImpl();</span><br><span class="line">		userService.login();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Console:<br><img src="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_3.png" alt></p>
+<p>In the example above, we are instantiating UserDaoImpl in UserServiceImpl class, which mean this class directly depends on UserDaoImpl class.This would cause many issues, e.g. error would occur if we want to change the implementation class, or rename the implementation class. It means that we will have to modify original code.</p>
+<p>Solution: Inversion of Control</p>
+<h2 id="2-2-Implementation-of-IoC"><a href="#2-2-Implementation-of-IoC" class="headerlink" title="2.2 Implementation of IoC"></a>2.2 Implementation of IoC</h2><p>Using IoC (Inverse of Control) to solve the problem of code coupling. In one word, we introduce facotry that manage the object relations instead of manually create dependencies.</p>
+<ol>
+<li><p>Create a factory that provide userDao instance<br>UserDaoFactory.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDAOFactory</span> </span>&#123;</span><br><span class="line">	<span class="comment">//provide function to get object</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDAOImpl <span class="title">getUserDAO</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//return this instance</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span>  UserDAOImpl ();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Modify the code in UserServiceImpl</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">IUserService</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		 System.out.println(<span class="string">"UserServiceImpl_login function has been called..."</span>);</span><br><span class="line">		 <span class="comment">//Create factory, get dependency from it</span></span><br><span class="line">		 UserDAOFactory userDAOFactory = <span class="keyword">new</span> UserDAOFactory();</span><br><span class="line">		 UserDAOImpl userDAO = userDAOFactory.getUserDAO();</span><br><span class="line">		 userDAO.findUserByUsernameAndPassword();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Above method does solve code coupling between these two class. However, the function in factory class still requires a specific instance. The solution here is reflection.</p>
+<p>Solution: Create instance of object by reflection, which pass in a string that specify the dependency class</p>
+<p>UserDAOFactory.java:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getBean</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Object bean = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		bean = Class.forName(<span class="string">"yiheng.chen.spring.a_quickstart.UserDAOImpl"</span>).newInstance();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//return the instance</span></span><br><span class="line">	<span class="keyword">return</span> bean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>UserServiceImpl.java:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IUserDAO userDAO = (IUserDAO) userDAOFactory.getBean();</span><br><span class="line">userDAO.findUserByUsernameAndPassword();</span><br></pre></td></tr></table></figure></p>
+<p>Let’s think,above solution use a fixed string to create instance, so how can we dynamically pass in different string?</p>
+<p>The solution is XML  configuration file</p>
+<p>It comes to an end that the IoC underlying implementation is a combination of <font color="red">factory(design pattern), reflection(mechanism)</font>,and  <font color="red">configuration file(XML)</font>.</p>
+<h2 id="2-3-Obtain-Bean-objects-from-Spring-factory"><a href="#2-3-Obtain-Bean-objects-from-Spring-factory" class="headerlink" title="2.3 Obtain Bean objects from Spring factory"></a>2.3 Obtain Bean objects from Spring factory</h2><ol>
+<li><p>Configure applicationContext.xml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"</span></span><br><span class="line"><span class="string">http://www.springframework.org/schema/beans </span></span><br><span class="line"><span class="string">http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id=<span class="string">"userDAO"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"yiheng.chen.spring.a_quickstart.UserDAOImpl"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Modify the code in UserServiceImpl class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Create Spring factory, load Spring configuration file</span></span><br><span class="line"> ApplicationContext ac = <span class="keyword">new</span> 		  ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line"> IUserDAO userDAO = (IUserDAO) ac.getBean(<span class="string">"userDAO"</span>);</span><br><span class="line"> userDAO.findUserByUsernameAndPassword();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="2-4-Implementation-of-DI"><a href="#2-4-Implementation-of-DI" class="headerlink" title="2.4 Implementation of DI"></a>2.4 Implementation of DI</h2><p>DI(Dependency Injection): When Spring framework is creating Bean object, it injects dependencies into bean components. </p>
+<ol>
+<li><p>Configure applicationContext.xml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"</span></span><br><span class="line"><span class="string">http://www.springframework.org/schema/beans </span></span><br><span class="line"><span class="string">http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id=<span class="string">"userDAO"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"yiheng.chen.spring.a_quickstart.UserDAOImpl"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id =<span class="string">"userService"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"yiheng.chen.spring.a_quickstart.UserServiceImpl"</span>&gt;</span><br><span class="line">	&lt;!-- Inject object --&gt;</span><br><span class="line">	&lt;!-- property inject dependency based on the setter function of the <span class="class"><span class="keyword">class</span> --&gt;</span></span><br><span class="line">	&lt;!-- ref: the object that it is refer to, its values is the id/name of that bean --&gt;</span><br><span class="line">	&lt;property name=<span class="string">"userDAO"</span> ref=<span class="string">"userDAO"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Provide setter function<br>UserServiceImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">IUserService</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//define attribute</span></span><br><span class="line">	<span class="keyword">private</span> IUserDAO userDAO;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserDAO</span><span class="params">(IUserDAO userDAO)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.userDAO = userDAO;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		 System.out.println(<span class="string">"UserServiceImpl-service层方法调用了"</span>);</span><br><span class="line">		 </span><br><span class="line">		 userDAO.findUserByUsernameAndPassword();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run test(the object must be obtained from Spring factory. Object that is mannually instantiated has no dependency injection)</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringTest</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line">		IUserService userService = (IUserService) ac.getBean(<span class="string">"userService"</span>);</span><br><span class="line">		</span><br><span class="line">		userService.login();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-5-Spring-Factory"><a href="#2-5-Spring-Factory" class="headerlink" title="2.5 Spring Factory"></a>2.5 Spring Factory</h2><p>ApplicationContext is used to load Spring framework configuration file, to create Spring factory object. It is also known as Spring container.</p>
+<p><img src="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_4.png" alt></p>
+<p>Why don’t we just use the top interface to operate?</p>
+<ul>
+<li>BeanFactory uses lazy load strategy, it initialize bean after user first call getBean function.</li>
+<li>ApplicationContext is an extension of BeanFactory which provides more functions.<ul>
+<li>Internationalization(I18N)</li>
+<li>Event propagation</li>
+<li>Bean autowire</li>
+<li>Context implementation of different application layer</li>
+</ul>
+</li>
+</ul>
+<p>Since ApplicationContext is much more powerful, it is rare to see BeanFactory used in development.</p>
+<p>PS. There is a difference between BeanFactory and FactoryBean. We will discuss it later.</p>
+<p>There are two ways of obtaining beans from IoC container</p>
+<ul>
+<li>by its id/name </li>
+<li>by the its class or the class of its interface</li>
+</ul>
+<h1 id="3-Assemble-bean-in-IoC-container"><a href="#3-Assemble-bean-in-IoC-container" class="headerlink" title="3. Assemble bean in IoC container"></a>3. Assemble bean in IoC container</h1><h2 id="3-1-Four-ways-of-instantiating-Bean"><a href="#3-1-Four-ways-of-instantiating-Bean" class="headerlink" title="3.1 Four ways of instantiating Bean"></a>3.1 Four ways of instantiating Bean</h2><ul>
+<li>Use default constructor(most common)</li>
+<li>Static factory method<ol>
+<li>Define bean class</li>
+<li>Define factory Class and write static function to return the bean</li>
+<li>Configure applicationContext.xml, specify class and factory-method</li>
+</ol>
+</li>
+<li>Instance factory method<ol>
+<li>Define bean</li>
+<li>Define factory class and write non-static function to return the bean</li>
+<li>Configure applicationContext.xml, specify class of the factory, and factory-method and factory-bean of that bean </li>
+</ol>
+</li>
+<li>FactoryBean<ol>
+<li>Define bean</li>
+<li>Create MyFactoryBean class and implement FactoryBean interface</li>
+<li>Configure applicationContext.xm</li>
+</ol>
+</li>
+</ul>
+<p>What is the difference between FactoryBean and BeanFactory?</p>
+<ul>
+<li>BeanFactory is a factory, it actually create the environment for Spring context. it is used to manage bean instance.</li>
+<li>FactoryBean is a tool which generates beans. It is a bean that we use to obtain a specific type of object. It is one way to instantiate bean instance.</li>
+</ul>
+<h2 id="3-2-Scope-of-Bean"><a href="#3-2-Scope-of-Bean" class="headerlink" title="3.2 Scope of Bean"></a>3.2 Scope of Bean</h2><p><img src="https://raw.githubusercontent.com/winnerchen/yiheng.github.io/master/images/spring_5.png" alt></p>
+<p>We normally use <font color="red">Singleton</font> and  <font color="red">Prototype</font> in the project development.</p>
+<h2 id="3-3-The-life-cycle-of-bean"><a href="#3-3-The-life-cycle-of-bean" class="headerlink" title="3.3 The life cycle of bean"></a>3.3 The life cycle of bean</h2><p>We are able to control the life cycle of bean through Spring factory</p>
+<h3 id="3-3-1-Configure-init-and-destory-function-of-bean"><a href="#3-3-1-Configure-init-and-destory-function-of-bean" class="headerlink" title="3.3.1 Configure init and destory function of bean"></a>3.3.1 Configure init and destory function of bean</h3><ul>
+<li>Specify the function that will be invoked after instantiation by specifying init-method</li>
+<li>Specify the function that will be invoked after the object is destory by specifying destory-method</li>
+</ul>
+<p>Steps:</p>
+<ol>
+<li><p>Create LifeCycleBean, specify an init function and a destory function</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeCycleBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//define constructor</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">LifeCycleBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"LifeCycleBean constructor is called"</span>);		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"LifeCycleBean-init, called after instantiation"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"LifeCycleBean-destroy called when object is destory"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Configure applicationContext.xml</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"lifeCycleBean"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"yiheng.chen.spring.d_xmllifecycle.LifeCycleBean"</span> init-method=<span class="string">"init"</span> destroy-method=<span class="string">"destroy"</span> /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="3-4-Dependency-injection-of-bean-attribute"><a href="#3-4-Dependency-injection-of-bean-attribute" class="headerlink" title="3.4 Dependency injection of bean attribute"></a>3.4 Dependency injection of bean attribute</h2><p>What is attribute injection of bean? It means assigning values to the attributes of an object.</p>
+<p>There are two ways of doing that:</p>
+<ul>
+<li>by passing the parameters in the constructor</li>
+<li>by using setter function</li>
+</ul>
+<h3 id="3-4-1-Attribute-injection-by-constructor"><a href="#3-4-1-Attribute-injection-by-constructor" class="headerlink" title="3.4.1 Attribute injection by constructor"></a>3.4.1 Attribute injection by constructor</h3><ol>
+<li><p>Define bean and its constructor </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Integer id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> Double price;</span><br><span class="line">	<span class="comment">//Constructor with arguements</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Car</span><span class="params">(Integer id, String name, Double price)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.price = price;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Car [id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", price="</span> + price + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Configure applicationContext.xml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- use constructor to inject values into attributes--&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"car"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"yiheng.chen.spring.e_xmlpropertydi.Car"</span>&gt;</span><br><span class="line">		&lt;!--constructor-arg：indicate that we are using constructor with arguements instead of the <span class="keyword">default</span> one</span><br><span class="line">		<span class="keyword">new</span> Car(<span class="number">1</span>,<span class="string">"BMW"</span>,<span class="number">99999</span>d)</span><br><span class="line">		<span class="number">1</span>st group of parameters：locate attribute</span><br><span class="line">		    * index:locate attribute by index，<span class="number">0</span> means the first one</span><br><span class="line">			* name：locate attribute by its name</span><br><span class="line">			* type:locate attribute by its data type </span><br><span class="line">		<span class="number">2</span>nd group of paramters：values</span><br><span class="line">			* value:simple values, strings</span><br><span class="line">			* ref: bean objects that are created by spring containter</span><br><span class="line">		--&gt;</span><br><span class="line">		&lt;!-- &lt;constructor-arg index=<span class="string">"0"</span> value=<span class="string">"1"</span>/&gt; --&gt;</span><br><span class="line">		&lt;constructor-arg index=<span class="string">"0"</span> name=<span class="string">"id"</span> value=<span class="string">"1"</span>/&gt;</span><br><span class="line">		&lt;!-- &lt;constructor-arg name=<span class="string">"name"</span> value=<span class="string">"BMW_X3"</span>/&gt; --&gt;</span><br><span class="line">		&lt;constructor-arg name=<span class="string">"name"</span> &gt;</span><br><span class="line">			&lt;value&gt;BMW_X6&lt;/value&gt;</span><br><span class="line">		&lt;/constructor-arg&gt;</span><br><span class="line">		&lt;constructor-arg type=<span class="string">"java.lang.Double"</span> value=<span class="string">"99999d"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-4-2-Attribute-injection-by-setter"><a href="#3-4-2-Attribute-injection-by-setter" class="headerlink" title="3.4.2 Attribute injection by setter"></a>3.4.2 Attribute injection by setter</h3><p>It uses the default constructor, however it must be provided by setter function. This method is commonly used in enterprise Java development</p>
+<ol>
+<li><p>Create java bean, define attributes</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Integer id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> Car car;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCar</span><span class="params">(Car car)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.car = car;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Person [id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", car="</span> + car + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Configure Spring container</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"person"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"yiheng.chen.spring.e_xmlpropertydi.Person"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"id"</span> value=<span class="string">"1001"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"name"</span> value=<span class="string">"Tom"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"car"</span> ref=<span class="string">"car"</span>/&gt; </span><br><span class="line">	&lt;/bean&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+	
+	<div>
+      
+        ﻿
+      
+	</div>
+
+    
+
+    
+	
+	
+	<div>
+		
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------End of the post-------------</div>
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  
+  <p><span>Title:</span><a href="/yiheng.github.io/2017/10/19/Spring-Introduction/">Spring QuickStart</a></p>
+  <p><span>Author:</span><a href="/" title="Visit Yiheng Chen personal blog">Yiheng Chen</a></p>
+  <p><span>Post time:</span>2017-10-19 - 18:10</p>
+  <p><span>Last update:</span>2022-06-11 - 18:06</p>
+  <p><span>Link:</span><a href="/yiheng.github.io/2017/10/19/Spring-Introduction/" title="Spring QuickStart">https://winnerchen.github.io/yiheng.github.io/2017/10/19/Spring-Introduction/</a>
+    <span class="copy-path" title="click to copy the link"><i class="fa fa-clipboard" data-clipboard-text="https://winnerchen.github.io/yiheng.github.io/2017/10/19/Spring-Introduction/" aria-label="copy to clipboard！"></i></span>
+  </p>
+  <p><span>Agreement:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a> Please retain the original link and author.</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: 'copied',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+    
+	
+</div>
+		
+		
+		
+	</div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/09/05/Implement-your-own-hashmap/" rel="next" title="Implement your own HashMap">
+                <i class="fa fa-chevron-left"></i> Implement your own HashMap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/yiheng.github.io/2018/01/20/Teamcity-quickstart/" rel="prev" title="Teamcity quickstart">
+                Teamcity quickstart <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+  
+  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/yiheng.github.io/images/photo.png" alt="Yiheng Chen">
+          <p class="site-author-name" itemprop="name">Yiheng Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/yiheng.github.io/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/yiheng.github.io/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/yiheng.github.io/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/yiheng.github.io/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">1. Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-What-is-Spring"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 What is Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-JavaEE-Hierarchy"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 JavaEE Hierarchy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-Full-Stack"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 Full Stack:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-Lightweight"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3 Lightweight:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-System-Architecture-of-Spring"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 System Architecture of Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Core-Container"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 Core Container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Data-Access-Integration"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 Data Access/Integration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-Web"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3 Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-AOP"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.2.4 AOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-5-Test"><span class="nav-number">1.2.5.</span> <span class="nav-text">1.2.5 Test</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-The-core-of-Spring"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 The core of Spring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-The-advantages-of-Spring"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 The advantages of Spring</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Spring-IoC-quick-start"><span class="nav-number">2.</span> <span class="nav-text">2. Spring IoC quick start</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Coding"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Coding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-Traditional-Business-logic-coding-business-layer-data-persistence-layer"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 Traditional Business logic coding (business layer, data persistence layer)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Implementation-of-IoC"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Implementation of IoC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Obtain-Bean-objects-from-Spring-factory"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Obtain Bean objects from Spring factory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-Implementation-of-DI"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 Implementation of DI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-Spring-Factory"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 Spring Factory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Assemble-bean-in-IoC-container"><span class="nav-number">3.</span> <span class="nav-text">3. Assemble bean in IoC container</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Four-ways-of-instantiating-Bean"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Four ways of instantiating Bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-Scope-of-Bean"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Scope of Bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-The-life-cycle-of-bean"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 The life cycle of bean</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-Configure-init-and-destory-function-of-bean"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 Configure init and destory function of bean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-Dependency-injection-of-bean-attribute"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Dependency injection of bean attribute</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-Attribute-injection-by-constructor"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 Attribute injection by constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-Attribute-injection-by-setter"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 Attribute injection by setter</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yiheng Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/yiheng.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NgYKO4HdCt1Q5ceUi67P8bRc-gzGzoHsz", "KTvNwn7mULzwlv3aXwgfIGGg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

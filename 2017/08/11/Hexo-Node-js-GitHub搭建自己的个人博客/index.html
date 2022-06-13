@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/yiheng.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/yiheng.github.io/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="GitHub,Hexo,个人博客,Node.js,">
+
+
+
+
+
+  <link rel="alternate" href="/yiheng.github.io/atom.xml" title="Chen's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/yiheng.github.io/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1. 前言作为一名技术人员，很早之前就想搭建一个自己的个人博客了，但是由于种种原因一直搁置着，最近终于闲了下来，有时间去慢慢折腾了。拥有自己的个人博客是有很多好处的，包括：  总结自己的学习和成长 记录自己对于各种技术的收获 共享知识，方便其他人学习 包装自己，展示自我 练习文笔 …  还有很多的好处就不一一描述了，相信大家都有各种各样的动力去做一个博客。相对于早期的博客开发来说，现在搭建自己的个">
+<meta name="keywords" content="GitHub,Hexo,个人博客,Node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo+Node.js+GitHub搭建自己的个人博客">
+<meta property="og:url" content="https://winnerchen.github.io/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/index.html">
+<meta property="og:site_name" content="Chen&#39;s Blog">
+<meta property="og:description" content="1. 前言作为一名技术人员，很早之前就想搭建一个自己的个人博客了，但是由于种种原因一直搁置着，最近终于闲了下来，有时间去慢慢折腾了。拥有自己的个人博客是有很多好处的，包括：  总结自己的学习和成长 记录自己对于各种技术的收获 共享知识，方便其他人学习 包装自己，展示自我 练习文笔 …  还有很多的好处就不一一描述了，相信大家都有各种各样的动力去做一个博客。相对于早期的博客开发来说，现在搭建自己的个">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_10.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_11.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_14.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_15.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_16.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_17.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_18.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_19.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_21.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_22.png">
+<meta property="og:updated_time" content="2022-06-11T08:38:55.970Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo+Node.js+GitHub搭建自己的个人博客">
+<meta name="twitter:description" content="1. 前言作为一名技术人员，很早之前就想搭建一个自己的个人博客了，但是由于种种原因一直搁置着，最近终于闲了下来，有时间去慢慢折腾了。拥有自己的个人博客是有很多好处的，包括：  总结自己的学习和成长 记录自己对于各种技术的收获 共享知识，方便其他人学习 包装自己，展示自我 练习文笔 …  还有很多的好处就不一一描述了，相信大家都有各种各样的动力去做一个博客。相对于早期的博客开发来说，现在搭建自己的个">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/yiheng.github.io/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://winnerchen.github.io/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/">
+
+
+
+
+
+  <title>Hexo+Node.js+GitHub搭建自己的个人博客 | Chen's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/winnerchen/yiheng.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/yiheng.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/yiheng.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/yiheng.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/yiheng.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/yiheng.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/yiheng.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/yiheng.github.io/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://winnerchen.github.io/yiheng.github.io/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yiheng Chen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/yiheng.github.io/images/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hexo+Node.js+GitHub搭建自己的个人博客</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T16:18:17+10:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/yiheng.github.io/categories/搭建博客/" itemprop="url" rel="index">
+                    <span itemprop="name">搭建博客</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/" class="leancloud_visitors" data-flag-title="Hexo+Node.js+GitHub搭建自己的个人博客">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>作为一名技术人员，很早之前就想搭建一个自己的个人博客了，但是由于种种原因一直搁置着，最近终于闲了下来，有时间去慢慢折腾了。拥有自己的个人博客是有很多好处的，包括：</p>
+<ul>
+<li>总结自己的学习和成长</li>
+<li>记录自己对于各种技术的收获</li>
+<li>共享知识，方便其他人学习</li>
+<li>包装自己，展示自我</li>
+<li>练习文笔</li>
+<li>…</li>
+</ul>
+<p>还有很多的好处就不一一描述了，相信大家都有各种各样的动力去做一个博客。相对于早期的博客开发来说，现在搭建自己的个人博客是一件相对容易的事情，很多的框架和技术都已经把复杂的流程和操作封装起来，准备好环境之后只需要几条命令行即可完成本地博客的搭建。新博文的发布和编辑也是很好上手的。<br><a id="more"></a></p>
+<p>选择一个自己喜欢的主题风格即可让自己的博客看起来有模有样的了，以下是搭建博客的准备工作。</p>
+<h1 id="2-搭建环境准备"><a href="#2-搭建环境准备" class="headerlink" title="2. 搭建环境准备"></a>2. 搭建环境准备</h1><ul>
+<li>Node.js的安装和准备</li>
+<li>Git的安装和准备</li>
+<li>GitHub账号的配置和仓库的新建<h2 id="2-1-下载Node-js的安装文件"><a href="#2-1-下载Node-js的安装文件" class="headerlink" title="2.1 下载Node.js的安装文件"></a>2.1 下载Node.js的安装文件</h2>Node.js下载链接：</li>
+</ul>
+<ul>
+<li><a href="https://nodejs.org/dist/v4.2.3/node-v4.2.3-x86.msi" title="Node.js 32-bit" target="_blank" rel="noopener">Windows Installer 32-bit</a> </li>
+<li><a href="https://nodejs.org/dist/v4.2.3/node-v4.2.3-x64.msi" title="Node.js 32-bit" target="_blank" rel="noopener">Windows Installer 64-bit</a> </li>
+</ul>
+<p>大家可以根据自己的windows版本下载安装相应的文件。</p>
+<p><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_4.png" alt><br>下载完毕之后，一路按next即可完成安装。</p>
+<p>然后我们检查一下组件是否安装完毕，按下Win+R输入CMD打开命令行窗口。<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_1.png" alt><br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_2.png" alt><br>在打开的命令行窗口中输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<p>如果显示如下图，则表示安装正确，可以进行下一步安装。<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_3.png" alt> </p>
+<h2 id="2-2-配置Git环境"><a href="#2-2-配置Git环境" class="headerlink" title="2.2 配置Git环境"></a>2.2 配置Git环境</h2><p>下载<a href="https://git-scm.com/downloads" title="Git下载" target="_blank" rel="noopener">Git安装文件</a></p>
+<p>下载完成之后直接安装即可，安装过程无需解释了，next到结束即可。</p>
+<p>安装完毕之后用命令来检查Git是否已经正确安装:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure></p>
+<p>如果结果如下图所示，则说明安装正确，进入下一步安装。<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_5.png" alt> </p>
+<h2 id="2-3-GitHub账号的注册和配置"><a href="#2-3-GitHub账号的注册和配置" class="headerlink" title="2.3 GitHub账号的注册和配置"></a>2.3 GitHub账号的注册和配置</h2><h3 id="2-3-1-GitHub账号的注册"><a href="#2-3-1-GitHub账号的注册" class="headerlink" title="2.3.1 GitHub账号的注册"></a>2.3.1 GitHub账号的注册</h3><p>前往<a href="https://github.com/" target="_blank" rel="noopener">GitHub注册页面</a>注册自己的个人账户</p>
+<h3 id="2-3-2-GitHub仓库的创建"><a href="#2-3-2-GitHub仓库的创建" class="headerlink" title="2.3.2 GitHub仓库的创建"></a>2.3.2 GitHub仓库的创建</h3><p>如下图所示，点击Your Profile - Repositories - New来创建新仓库<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_7.png" alt><br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_6.png" alt></p>
+<p>在repository内填写yourname.github.io,如下图所示<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_8.png" alt></p>
+<h3 id="2-3-3-仓库配置"><a href="#2-3-3-仓库配置" class="headerlink" title="2.3.3 仓库配置"></a>2.3.3 仓库配置</h3><p>如果仓库正确创建之后，你会看到如下界面：<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_9.png" alt><br>然后点击setting选项卡，进入设置页面，往下拖至GitHub Pages项，此时可以看到Source下的选项不可用，因为此时尚未有分支创建和代码提交。如下图所示。<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_10.png" alt><br>在完成了hexo的安装、测试以及代码推送之后，可以选择master分支将自己的博客代码部署到GitHub服务器上。下面介绍Hexo的安装和配置。</p>
+<h2 id="2-4-安装Hexo"><a href="#2-4-安装Hexo" class="headerlink" title="2.4 安装Hexo"></a>2.4 安装Hexo</h2><p>首先新建一个文件夹，作为你的本地博客网站的路径。我的路径是F:/hexo。在该文件夹下按住Shift键+右键，选择‘在此处打开命令窗口’，进入cmd命令行。<br>在命令行中输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo -g  #-g表示全局安装, npm默认为当前项目安装</span><br><span class="line">hexo version</span><br></pre></td></tr></table></figure></p>
+<p>如果遇到报错，则用下面命令安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo --no-optional</span><br></pre></td></tr></table></figure></p>
+<p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo v</span><br></pre></td></tr></table></figure></p>
+<p>来查看hexo是否已经正确安装，如果显示下图，则表明安装成功。</p>
+<p><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_11.png" alt></p>
+<h1 id="3-部署本地博客"><a href="#3-部署本地博客" class="headerlink" title="3. 部署本地博客"></a>3. 部署本地博客</h1><p>然后依次输入hexo命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo init #执行init命令初始化到你指定的hexo目录</span><br><span class="line">npm install    #install before start blogging</span><br><span class="line">hexo generate       #自动根据当前目录下文件,生成静态网页</span><br><span class="line">hexo server         #运行本地服务</span><br></pre></td></tr></table></figure></p>
+<p>显示下图则表示项目已经成功初始化并且部署到本地4000端口。<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_13.png" alt><br>在浏览器中输入<a href="http://localhost:4000/即可访问本地博客。" target="_blank" rel="noopener">http://localhost:4000/即可访问本地博客。</a><br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_14.png" alt></p>
+<h1 id="4-把本地博客部署到GitHub-Pages"><a href="#4-把本地博客部署到GitHub-Pages" class="headerlink" title="4. 把本地博客部署到GitHub Pages"></a>4. 把本地博客部署到GitHub Pages</h1><h2 id="4-1-在Git中配置个人信息"><a href="#4-1-在Git中配置个人信息" class="headerlink" title="4.1 在Git中配置个人信息"></a>4.1 在Git中配置个人信息</h2><p>如果你之前已经配置好Git的个人信息，可以跳过这一步。<br>查看Git是否关联GitHub：在该文件夹下右击打开GIT bash窗口，然后输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
+<p>如果显示如下图，则表示已经关联成功<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_15.png" alt><br>如果是初次使用git要首先设置git的username和email：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;your_username&quot;</span><br><span class="line">git config --global user.email &quot;your_email@xxx.com&quot;</span><br></pre></td></tr></table></figure></p>
+<p>然后生成秘钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@xxx.com&quot;</span><br></pre></td></tr></table></figure></p>
+<p>连续按三次回车之后，会生成两个文件id_rsa 和 id_rsa.pub，id_rsa 是密钥，id_rsa.pub 就是公钥。这两文件默认分别在如下目录里生成：</p>
+<p>Linux/Mac 系统 在 ~/.ssh 下，win系统在 /c/Documents and Settings/username/.ssh 下，都是隐藏文件，相信你们有办法查看的。</p>
+<p>接下来要做的是把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 GitHub上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
+<h2 id="4-2-GitHub上添加SSH-key"><a href="#4-2-GitHub上添加SSH-key" class="headerlink" title="4.2 GitHub上添加SSH key"></a>4.2 GitHub上添加SSH key</h2><p>第一步先在 GitHub 上的设置页面，点击最左侧 SSH and GPG keys ：<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_16.png" alt><br>然后点击右上角的 New SSH key 按钮， 然后将id_rsa.pub公钥文件里的内容复制粘贴进去就可以了。Title那一栏可以不用填写。点击Add SSH key 按钮就ok了。<br>SSH key 添加成功之后，输入 ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a> 进行测试，如果出现以下提示证明添加成功了。<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_17.png" alt></p>
+<h2 id="4-3-配置-config-yml文件"><a href="#4-3-配置-config-yml文件" class="headerlink" title="4.3 配置_config.yml文件"></a>4.3 配置_config.yml文件</h2><p>在根目录下找到_config.yml文件，找到deployment，然后按照如下修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:yourname/yourname.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>比如我的仓库的地址是<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:winnerchen/chen.github.io.git，所以配置如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:winnerchen/chen.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>同时还可在site栏下修改标题已经作者：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: Your Blog Name</span><br><span class="line">subtitle: Your Subtitle</span><br><span class="line">description:</span><br><span class="line">author: Your Name</span><br><span class="line">language:</span><br><span class="line">timezone:</span><br></pre></td></tr></table></figure></p>
+<p>配置url和root（非常重要！如果没有配置成功会显示不出样式和主题！）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># URL</span><br><span class="line">## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;</span><br><span class="line">url: http://yoursite.com</span><br><span class="line">root: /</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure></p>
+<p>以我的配置为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">url:  https://winnerchen.github.io #博客的域名</span><br><span class="line">root: /chen.github.io #git仓库的名称</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-4部署到GitHub-Pages"><a href="#4-4部署到GitHub-Pages" class="headerlink" title="4.4部署到GitHub Pages"></a>4.4部署到GitHub Pages</h2><p>安装git扩展：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
+<p>如果没有执行者行命令，将会提醒<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deloyer not found:git</span><br></pre></td></tr></table></figure></p>
+<p>运行生成和部署的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g   # 生成</span><br><span class="line">hexo d   # 部署</span><br></pre></td></tr></table></figure></p>
+<p>显示下图表明项目已经成功推送到github远程仓库<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_18.png" alt><br>此时到github仓库中查看，会发现代码已经成功上传<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_19.png" alt><br>然后进入setting中，找到github pages，把source选为master branch<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_20.png" alt><br>稍等一分钟左右，等到刷出如下图所示的页面即可访问自己部署在github上的个人博客了！<br><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_21.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/winnerchen/hexo/master/source/images/blog_22.png" alt><br>至此，在github上部署个人博客的教程已经结束，希望大家都不出bug顺利走完！</p>
+<h1 id="5-发布日志"><a href="#5-发布日志" class="headerlink" title="5.发布日志"></a>5.发布日志</h1><p>To be continued…</p>
+<h1 id="6-自定义主题"><a href="#6-自定义主题" class="headerlink" title="6.自定义主题"></a>6.自定义主题</h1><p>To be continued…</p>
+<h1 id="7-插件安装"><a href="#7-插件安装" class="headerlink" title="7.插件安装"></a>7.插件安装</h1><p>To be continued…</p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+	
+	<div>
+      
+        ﻿
+      
+	</div>
+
+    
+
+    
+	
+	
+	<div>
+		
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------End of the post-------------</div>
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  
+  <p><span>Title:</span><a href="/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/">Hexo+Node.js+GitHub搭建自己的个人博客</a></p>
+  <p><span>Author:</span><a href="/" title="Visit Yiheng Chen personal blog">Yiheng Chen</a></p>
+  <p><span>Post time:</span>2017-08-11 - 16:08</p>
+  <p><span>Last update:</span>2022-06-11 - 18:06</p>
+  <p><span>Link:</span><a href="/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/" title="Hexo+Node.js+GitHub搭建自己的个人博客">https://winnerchen.github.io/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/</a>
+    <span class="copy-path" title="click to copy the link"><i class="fa fa-clipboard" data-clipboard-text="https://winnerchen.github.io/yiheng.github.io/2017/08/11/Hexo-Node-js-GitHub搭建自己的个人博客/" aria-label="copy to clipboard！"></i></span>
+  </p>
+  <p><span>Agreement:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a> Please retain the original link and author.</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: 'copied',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+    
+	
+</div>
+		
+		
+		
+	</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/yiheng.github.io/tags/GitHub/" rel="tag"># GitHub</a>
+          
+            <a href="/yiheng.github.io/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/yiheng.github.io/tags/个人博客/" rel="tag"># 个人博客</a>
+          
+            <a href="/yiheng.github.io/tags/Node-js/" rel="tag"># Node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/08/09/搬瓦工-ss-fs搭建自己的私人服务器/" rel="next" title="搬瓦工+SS+FS搭建自己的翻墙神器">
+                <i class="fa fa-chevron-left"></i> 搬瓦工+SS+FS搭建自己的翻墙神器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/yiheng.github.io/2017/08/26/自己动手实现一个HashMap/" rel="prev" title="自己动手实现一个HashMap">
+                自己动手实现一个HashMap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+  
+  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/yiheng.github.io/images/photo.png" alt="Yiheng Chen">
+          <p class="site-author-name" itemprop="name">Yiheng Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/yiheng.github.io/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/yiheng.github.io/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/yiheng.github.io/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/yiheng.github.io/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-搭建环境准备"><span class="nav-number">2.</span> <span class="nav-text">2. 搭建环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-下载Node-js的安装文件"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 下载Node.js的安装文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-配置Git环境"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 配置Git环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-GitHub账号的注册和配置"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 GitHub账号的注册和配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-GitHub账号的注册"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 GitHub账号的注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-GitHub仓库的创建"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 GitHub仓库的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-仓库配置"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 仓库配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-安装Hexo"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 安装Hexo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-部署本地博客"><span class="nav-number">3.</span> <span class="nav-text">3. 部署本地博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-把本地博客部署到GitHub-Pages"><span class="nav-number">4.</span> <span class="nav-text">4. 把本地博客部署到GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-在Git中配置个人信息"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 在Git中配置个人信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-GitHub上添加SSH-key"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 GitHub上添加SSH key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-配置-config-yml文件"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 配置_config.yml文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4部署到GitHub-Pages"><span class="nav-number">4.4.</span> <span class="nav-text">4.4部署到GitHub Pages</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-发布日志"><span class="nav-number">5.</span> <span class="nav-text">5.发布日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-自定义主题"><span class="nav-number">6.</span> <span class="nav-text">6.自定义主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-插件安装"><span class="nav-number">7.</span> <span class="nav-text">7.插件安装</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yiheng Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/yiheng.github.io/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/yiheng.github.io/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/yiheng.github.io/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NgYKO4HdCt1Q5ceUi67P8bRc-gzGzoHsz", "KTvNwn7mULzwlv3aXwgfIGGg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
